@@ -189,6 +189,19 @@ margin : 1px ;
    display:flex;
    justify-content: center;
    }
+
+   #link-div{
+    overflow: auto;
+    position: absolute;
+    visibility: hidden;
+    background-color: white;
+    border:2px solid black;
+   }
+
+   #link-div p:not(#link) , .notif p {
+    padding-left:5px;
+    padding-right:5px;
+   } 
         </style>
     </head>
     <body>
@@ -230,6 +243,7 @@ margin : 1px ;
       <ul>
      <li><button id="change-palette">Change Palette</button></li>
      <li><button id="change-size">Change Number of Boxes</button></li>
+     <li><button id="make-puzzle-link">Generate Puzzle Link</button></li>
       </ul>
      </div>
 
@@ -284,7 +298,11 @@ margin : 1px ;
     </div>
     </div>
   
-
+ <div class="cancelable notif" id="link-div">
+  <p>Copy and share this link to play the same game!</p>
+  <p id="link"></p>
+  <button class="cancel">Return To Game</button>
+ </div>
 
     <div id="instructions" class="cancelable">
       <div id="cancel-strip">
