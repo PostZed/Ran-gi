@@ -3,13 +3,19 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>Ran - gi</title>
-      
+        <link rel="icon" href="favicon.png" type="image/x-icon" />
         <script src="//cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.js"></script>
         <style>
 
  *{
   font-size: 20px;
+  font-family:Georgia, "Times New Roman",  "Trebuchet MS" , serif, sans-serif  ;
  }
+
+ #about a {
+  text-decoration: none;
+ }
+
 
 @media screen and (max-width : 500px) {
   #control-buttons button , #top-strip button, .notif button, #about, #menu-options button,
@@ -202,6 +208,7 @@ margin : 1px ;
     padding-left:5px;
     padding-right:5px;
    } 
+
         </style>
     </head>
     <body>
@@ -282,7 +289,7 @@ margin : 1px ;
     </div>
 
     <div id="has-won-game" class="notif">
-    <p>Congratulations ! You have successfully filled the Ran-gi Board !</p>
+    <p>Congratulations! You have successfully filled the Ran-gi Board!</p>
     <div>
     <button class="new-game"> New Game </button>
     <button class="return-to-puzzle"> Return to Puzzle </button>
