@@ -1,0 +1,462 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Ran - gi</title>
+        <link rel="icon" href="favicon.png" type="image/x-icon" />
+        <!-- "//cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.js"  -->
+        <script src="//cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.js"></script>
+        <style>
+
+ *{
+  font-size: 20px;
+  font-family:Georgia, "Times New Roman",  "Trebuchet MS" , serif, sans-serif  ;
+ }
+
+ #about a {
+  text-decoration: none;
+ }
+
+
+@media screen and (max-width : 500px) {
+  #control-buttons button , #top-strip button, .notif button, #about, #menu-options button,
+  #save-size , #save-colour{
+  padding: 1.5%;
+
+  }
+}       
+
+#main{
+  margin: 0 auto;
+  border: 1px solid pink ;
+}
+
+#top-strip{
+  width : 100%;
+  display : flex ;
+  justify-content: right;
+  border : 1px solid black;
+}
+
+ #confirmation-div , #has-won-game , #has-lost-game {
+position : absolute ;
+}
+
+#control-buttons{
+display:flex ;
+flex-direction: row;
+}
+
+#control-buttons button{
+  flex : 1 ;
+}
+
+canvas{
+  border : 1px solid black;
+}
+
+#top-strip button{
+  margin: 0 2%;
+}
+
+li > button{
+/*border-bottom: 1px solid black ;*/
+width : 100%;
+}
+
+ul{
+list-style-type: none;
+padding : 1px ;
+margin : 1px ;
+}
+
+
+
+      #palette {
+      background-color: white;
+      border : 2px solid black ;
+      visibility: hidden;
+      display:flex;
+      flex-direction:column;
+      }
+
+      
+      #list{
+        background-color: white; 
+      }
+
+      #button-div{
+      float : right ;
+    }
+    
+        h4{
+          margin : 0px ;
+          border : 2px solid black ;
+        }
+
+       #menu-options{
+      margin:0px ;
+      position:absolute ;
+      border: 2px solid black ;
+      background-color: white;
+       } 
+
+
+       #change-size-div{
+        position : absolute ;
+        visibility: hidden;
+        background-color: white;
+        border:2px solid black ;
+       }
+
+       h4{
+        margin:0px;
+        padding:3px ;
+       }
+
+       #size-list{
+        overflow : auto ;
+       }
+
+      
+       #confirmation-div , #has-won-game , #has-lost-game{
+        visibility : hidden ; 
+        border : 2px solid black ;
+        background-color: white;
+        margin : 0px ;
+        padding : 0px ;
+       } 
+
+    .btn-box-flex{
+    display : flex ;
+    flex-direction: row;
+    border:none ;
+   }
+
+   #palette , #menu-options , .notif, #change-size-div {
+    z-index : 1 ;
+   }
+
+   .notif div{
+    display : flex ;
+    flex-direction:row;
+    flex-wrap: wrap;
+   }
+
+   .notif div button{
+    flex:1;
+   }
+
+   
+
+#instructions{
+  position:absolute;
+  visibility: hidden;
+  border:1px solid black;
+}
+
+   #content {
+    background-color: ghostwhite;
+    overflow:auto;
+    height:90%;
+    padding: 5px 5px 5px 5px;
+   }
+
+   figure{
+    margin-top : 5px;
+    margin-bottom: 5px;
+    margin-left:none;
+    margin-right:none;
+    padding:none;
+    max-width:100%;
+   }
+
+   .contains-figure{
+    padding:none;
+    margin-top: 5px;
+    border:1px solid black;
+   }
+
+   img{
+    margin:2px;
+    padding:none;
+    max-width:100%;
+    max-height:100%;
+   }
+
+    #cancel-strip{
+    background-color: white;
+   display:flow-root;
+   border: 2px solid black;
+   }
+   #cancel-strip .cancel{
+   float:right;
+   }
+
+   #about-div{
+   display:flex;
+   justify-content: center;
+   }
+
+   #link-div{
+    overflow: auto ; 
+    /*
+  display :flex;
+    flex-direction: column; 
+    */
+    height : fit-content;
+    position: absolute;
+    visibility: hidden;
+    background-color: white;
+    border:2px solid black;
+   }
+
+  
+   #link-div p:not(#link) , .notif p {
+    padding-left:5px;
+    padding-right:5px;
+   } 
+
+   #link-div * {
+   /* flex : 1 ;*/
+    padding-top : 5px;
+    padding-bottom: 5px;
+    margin-top : 0px;
+    margin-bottom: 0px;
+   }
+
+   #color-guide-container{
+      display : flex ;
+      flex-direction: row ;
+    }
+
+   .color-guide{
+    display:inline-block ;
+    height : 80%;
+    flex : 1 ;
+    position : relative ;
+    top : 15% ;
+    margin-left : 2px ;
+    margin-right : 2px ;
+    }
+
+
+        </style>
+    </head>
+    <body>
+
+      <div id="main">
+
+<div id="top-content">
+
+  <div id="top-strip">
+    <div id="color-guide-container">
+      <span class="color-guide"></span>
+      <span class="color-guide"></span>
+      <span class="color-guide"></span>
+      <span class="color-guide"></span>
+    </div>
+    <button id="help">How to Play</button>
+    <button id="settings">Menu</button>
+    </div>
+
+  <div id="game"></div>
+
+</div>
+
+  <div id="control-buttons">
+    <button id="new-game" class="new-game">New Game</button>
+    <button id="start-again" class="start-again">Start Again</button>
+    <button id="check-board">Is it Correct?</button>
+    </div>
+
+<div id="about-div"><button id="about"><a href="./info.html" target="_blank">About / Contact</a></button></div>
+
+      </div>
+     
+  
+     <div id="palette">
+      <h4>Choose the 4 colors that you will use in your game :
+      </h4>
+      
+    <div id="list"></div>
+    <button id="save-colour">SAVE</button>
+    </div>
+
+    <div id="menu-options">
+      <ul>
+     <li><button id="change-palette">Change Palette</button></li>
+     <li><button id="change-size">Change Number of Boxes</button></li>
+     <li><button id="make-puzzle-link">Generate Puzzle Link</button></li>
+      </ul>
+     </div>
+
+    <div id="change-size-div">
+      <h4>Choose the number of boxes the game should have :</h4>
+      <div id="size-list">
+    <div>
+      <input type="radio" id="7" name="dimensions"/> 
+    <label for="7"> 7 by 7 </label>
+    </div>
+
+    <div>
+      <input type="radio" id="8" name="dimensions"/> 
+    <label for="8"> 8 by 8 </label>
+    </div>
+
+    <div>
+      <input type="radio" id="9" name="dimensions"/> 
+    <label for="9"> 9 by 9 </label>
+    </div>
+
+    <div>
+      <input type="radio" id="10" name="dimensions"/> 
+    <label for="10"> 10 by 10 </label>
+    </div>
+    <button id="save-size">SAVE</button>
+      </div>
+    </div>
+
+    <div id="confirmation-div" class="notif cancelable">
+    <p></p>
+    <div class="btn-box-flex">
+    <button class="ok">OK</button>
+    <button class="cancel"> Cancel </button>
+    </div>
+    </div>
+
+    <div id="has-won-game" class="notif">
+    <p>Congratulations! You have successfully filled the Ran-gi Board!</p>
+    <div>
+    <button class="new-game"> New Game </button>
+    <button class="return-to-puzzle"> Return to Puzzle </button>
+    </div>
+    </div>
+
+    <div id="has-lost-game" class="notif">
+    <p> Oops! The board is not correctly filled. Choose one of the following : </p>
+    <div>
+    <button class="new-game"> New Game </button>
+    <button class="start-again"> Try Again </button>
+    <button class="return-to-puzzle"> Return To Puzzle </button>
+    </div>
+    </div>
+  
+ <div class="cancelable notif" id="link-div">
+
+  <p>Copy and share this link to play the same game!</p>
+   <p id="link"></p>
+  <button class="cancel">Return To Game</button>
+ </div>
+
+    <div id="instructions" class="cancelable">
+      <div id="cancel-strip">
+        Instructions for Ran-gi
+      <button class="cancel">✕</button>
+      </div>
+
+      <div id="content">
+      <div>
+      <h4>Introduction</h4>
+<p>Welcome to Ran-gi!</p>
+
+<p>Ran-gi is a fun logic-based puzzle game for the whole family and the classroom.  
+</p>
+
+<p>The puzzle consists of 100 (or 81, or 64 or 49) squares arranged in a 
+  grid. The aim of the game is to colour all the white squares according to the rules
+  given below. There are 4 colours on the board. A puzzle can have only one correct solution.
+</p>
+
+      </div>
+      
+      
+      <div>
+          <h4>The rules</h4>
+          <p>Figure A is an incomplete 10 by 10 Ran-gi puzzle, and Figure B is the same puzzle after being 
+              correctly filled.
+          </p>
+      
+          <div class="contains-figure">
+      <figure>
+          <img srcset="4x-unsolved.png 550w, 3x-unsolved.png 361w, 2x-unsolved.png 270w, 1x-unsolved.png 180w"
+          sizes="(min-width : 1500px) 550px, (min-width : 600px) and (max-width :1499px) 360px, (max-width: 500px) and (min-width: 180px) 269px,
+          180px" 
+       alt="An unfilled Ran-gi board."
+       src="2x-unsolved.png" />
+          <figcaption>Figure A</figcaption>
+      </figure>
+      </div>
+      
+
+      <div class="contains-figure">
+      <figure>
+          <img srcset="4x-solved.png 550w, 3x-solved.png 361w, 2x-solved.png 270w, 1x-solved.png 180w"
+          sizes="(min-width : 1500px) 550px, (min-width : 600px) and (max-width :1499px) 360px, (max-width: 500px) and (min-width: 180px) 269px,
+          180px" 
+       alt="A filled Ran-gi board."
+       src="2x-solved.png" />
+          <figcaption>Figure B</figcaption>
+      </figure>
+     </div> 
+      <!--
+          <p>
+              The filled puzzle consists of 100 coloured squares.
+          </p>
+        -->
+          <p>The squares in Figure B are arranged in strips of one or more squares aligned either vertically or horizontally, and
+              sharing the same colour. Unless they are in the same strip, squares that are the same colour are not related.
+          </p>
+      
+          <p>The square or squares that make up a group cannot be of the same colour as any square that <em>
+              directly</em> neighbours any of them. This is illustrated in Figure C. The squares marked with 
+          letter "X" cannot be yellow, since each of them shares a side with a yellow square. The 
+      squares marked with ticks: "✓" <em>can</em> be legally yellow since they are not direct neighbours
+      of any of the yellow squares.</p>
+
+      <div class="contains-figure">
+      <figure>
+        <img src="figure-c.jpg" />
+        <figcaption>
+          Figure C
+        </figcaption>
+      </figure>
+      </div>
+      <p>Groups of the same colour cannot intersect, or touch each other directly. A group forms an island of its colour 
+          within its vicinity.
+      </p>
+      </div>
+      
+      
+      <div>
+          <h4>The clues</h4>
+          <p>A square with a colour <em>C</em> and a number <em>N</em> indicates that that square is a member
+          of a group of <em>N</em> squares that are all of colour <em>C</em>.
+        This type of square cannot be filled.
+      </p>
+      
+          <p>A white square with a number <em>N</em> inside it is a member of a group of <em>N</em> squares
+          whose colour you will deduce. This type of square can be filled.</p>
+      
+          <p>A square of colour <em>C</em> that has no number inside it indicates that that square is a member of a strip
+           of that colour. This type of square cannot be filled.</p>
+      
+          <p>A square with neither colour nor number offers no information. This type of square can be filled.</p>
+      
+          <p>If a square has a dot "•", that square is a pre-filled colour clue, and you will not be able to change its colour.
+          </p>
+      
+          <p>Clicking on white squares will cause them to change colour according to the palette currently in use.
+          Click until the square turns white to revert it to white.
+          </p>
+      
+          <p>When you have filled the board, i.e there are no more white squares, click "Is it Correct?" to 
+              validate your answers.
+          </p>
+      </div>
+      </div>
+</div>
+
+     <script type="module" src="source/main.js"></script>
+    </body>
+</html>
