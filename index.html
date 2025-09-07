@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
+    <title>Ran-gi</title>
+    <style>
+        html {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        main {
+            /* background-color: azure; */
+            margin: 0 auto;
+            height: 100vh;
+        }
+
+        main>* {
+            margin: 0 auto;
+            width: fit-content;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        @media (width >=800px) {
+            main {
+                width: 70%
+            }
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .img-container {
+            height: 60%;
+
+        }
+
+        .new-host {
+            /* height:20%; */
+            --color-mypink :oklch(82.3% .12 346.018);
+            border: 2px solid var(--color-mypink);
+            border-radius: 20px;
+            background-color:var(--color-mypink) ;
+            max-width:60%;
+            text-align: center;
+            padding:10px 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+
+        <h3>Ran-gi has moved!</h3>
+        <p>You're looking for the Ran-gi puzzle:</p>
+        <div class="img-container">
+            <img src="Rangi-main.png" />
+        </div>
+
+        <p class="new-host">Ran-gi is now hosted <a href="https://ran-gi-with-next.vercel.app/">here.</a></p>
+
+    </main>
+
+</body>
+
+</html>
